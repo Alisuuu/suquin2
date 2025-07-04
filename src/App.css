@@ -1,0 +1,105 @@
+/* === ESTILOS DO LOADER (ADICIONADO) === */
+#loader-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #121212; z-index: 99999;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 1; visibility: visible;
+    transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+}
+#loader-overlay.hidden { opacity: 0; visibility: hidden; }
+.loader-spinner {
+    border: 8px solid rgba(255, 255, 255, 0.2);
+    border-top: 8px solid #bd93f9;
+    border-radius: 50%; width: 60px; height: 60px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+/* === FIM DOS ESTILOS DO LOADER === */
+
+.theme-modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+}
+.theme-modal-content {
+    background-color: #282a36; /* Dracula background as default for modal */
+    margin: auto;
+    padding: 25px;
+    border: 1px solid #bd93f9;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 30px rgba(189, 147, 249, 0.4), 0 2px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: center;
+    animation: fadeInScale 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.theme-modal-content h2 {
+    color: #f8f8f2;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-shadow: 0 0 5px rgba(255, 121, 198, 0.5);
+}
+.theme-modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.theme-modal-button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 120px;
+}
+.theme-modal-button.default {
+    background-color: #121212;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+.theme-modal-button.dracula {
+    background-color: #282a36;
+    color: #f8f8f2;
+    border: 2px solid #bd93f9;
+}
+.theme-modal-button.anime {
+    background-color: #ff69b4;
+    color: #ffffff;
+    border: 2px solid #ff69b4;
+}
+.theme-modal-button:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+}
+.theme-modal-close {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.theme-modal-close:hover, .theme-modal-close:focus {
+    color: #fff;
+    text-decoration: none;
+}
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
