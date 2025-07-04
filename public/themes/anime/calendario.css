@@ -1,0 +1,663 @@
+/* General Reset and Body Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+  /* --- Variáveis do Tema Dracula --- */
+  --dracula-background: #282a36;
+  --dracula-current-line: #44475a;
+  --dracula-foreground: #f8f8f2;
+  --dracula-comment: #6272a4;
+  --dracula-pink: #ff79c6;
+  --dracula-purple: #bd93f9;
+  --dracula-cyan: #8be9fd;
+  --dracula-green: #50fa7b;
+  --dracula-red: #ff5555;
+  
+  /* --- Variáveis para superfícies translúcidas --- */
+  --translucent-bg: rgba(68, 71, 90, 0.5);
+  --translucent-border: rgba(255, 121, 198, 0.2);
+
+  /* --- Variáveis do Modal --- */
+  --modal-border-neutral: rgba(255, 121, 198, 0.2);
+  --modal-background-color: #282a36; /* Cor de fundo sólida do popup */
+  --filter-panel-bg: #44475a; /* Cor de fundo do painel de gêneros */
+  --filter-button-inactive-bg: #6272a4; /* Cor de fundo do botão inativo */
+  --filter-button-inactive-hover-bg: #7a8ab8; /* Cor do hover para botão inativo */
+  --modal-shadow-glow: 0 0 40px -10px rgba(255, 121, 198, 0.4);
+  --subtle-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   LAYOUT E FUNDO
+   ========================================================================== */
+
+body {
+  font-family: 'sans-serif';
+  background-color: var(--dracula-background);
+  color: var(--dracula-foreground);
+}
+
+header, main {
+    position: relative;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   COMPONENTES PRINCIPAIS
+   ========================================================================== */
+
+.status-tag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 30;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--dracula-foreground);
+  background-color: rgba(68, 71, 90, 0.7);
+  border: 1px solid rgba(255, 121, 198, 0.2);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.status-tag-atualizado { background: rgba(189, 147, 249, 0.7); }
+.status-tag-hoje { background: rgba(139, 233, 253, 0.7); }
+.status-tag-futuro { background: rgba(241, 250, 140, 0.7); color: #111827; }
+.status-tag-atrasado { background: rgba(255, 85, 85, 0.7); }
+
+.button-blur {
+  background: rgba(255, 121, 198, 0.12);
+  border: 1px solid rgba(255, 121, 198, 0.15);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: var(--dracula-comment);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: background, color, border-color, box-shadow;
+}
+
+.button-blur.active {
+  background: var(--dracula-pink);
+  color: var(--dracula-foreground);
+  border-color: var(--dracula-pink);
+  box-shadow: 0 4px 15px rgba(255, 121, 198, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.button-blur:hover:not(.active) {
+  background: rgba(255, 121, 198, 0.2);
+}
+
+.day-button {
+  background: rgba(68, 71, 90, 0.3);
+  border: 1px solid rgba(255, 121, 198, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  will-change: border-color, box-shadow, background;
+  position: relative;
+}
+
+.day-button:hover {
+  border-color: rgba(255, 121, 198, 0.3);
+  box-shadow: 0 0 12px rgba(255, 121, 198, 0.2);
+}
+
+.day-button.active {
+  background: rgba(255, 121, 198, 0.25);
+  border-color: var(--dracula-pink);
+  box-shadow: 0 0 15px rgba(255, 121, 198, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.1);
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #2E4F58 inset !important;
+  -webkit-text-fill-color: var(--dracula-foreground) !important;
+}
+
+#search, #toggleFiltersBtn {
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: background, border-color, box-shadow;
+}
+
+#search {
+  background: rgba(255, 121, 198, 0.1) !important;
+  border: 1px solid rgba(255, 121, 198, 0.15) !important;
+}
+
+#search:focus {
+  background: rgba(255, 121, 198, 0.15) !important;
+  border-color: rgba(255, 121, 198, 0.3) !important;
+}
+
+#toggleFiltersBtn {
+  background: rgba(255, 121, 198, 0.2) !important;
+  border: 1px solid rgba(255, 121, 198, 0.25) !important;
+}
+
+#toggleFiltersBtn:hover {
+  background: rgba(255, 121, 198, 0.3) !important;
+  box-shadow: 0 4px 15px rgba(255, 121, 198, 0.25);
+}
+
+/* ==========================================================================
+   SWEETALERT2 MODAL E LOADER
+   ========================================================================== */
+
+.swal-loader-popup.swal2-popup {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.loader {
+    border: 5px solid var(--dracula-current-line);
+    border-top: 5px solid var(--dracula-pink);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 0.8s linear infinite;
+    margin: 40px auto;
+    will-change: transform;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Estilo geral do Popup */
+.swal2-popup {
+    color: var(--dracula-foreground) !important;
+    border-radius: 1.25rem !important; /* 20px */
+    border: 1px solid var(--modal-border-neutral) !important;
+    max-width: 90vw !important;
+    width: auto !important;
+    background: var(--modal-background-color) !important; /* Cor de fundo sólida */
+    box-shadow: 0 8px 30px -5px rgba(0,0,0,0.7), var(--modal-shadow-glow) !important;
+    padding: 1rem 1.5rem 1.5rem 1.5rem !important;
+}
+
+.swal2-title {
+    color: var(--dracula-foreground) !important; /* Título branco */
+    font-weight: 600 !important;
+    font-size: 1.75rem !important;
+    padding: 1rem 0 0 0 !important;
+    margin-bottom: 0.5rem !important;
+    text-align: left !important;
+}
+
+.swal2-html-container {
+    color: var(--dracula-foreground) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+}
+
+.swal2-close {
+    color: var(--dracula-comment) !important;
+    font-size: 2.5em !important;
+    position: absolute !important;
+    top: 1.25rem !important;
+    right: 1.5rem !important;
+    z-index: 100;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+    will-change: color, transform;
+}
+
+.swal2-close:hover {
+    color: var(--dracula-foreground) !important;
+    transform: scale(1.1) !important;
+}
+
+/* --- INÍCIO: ESTILOS EXATOS PARA O FILTRO DE GÊNERO --- */
+
+.swal-genre-filter-type-selector {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.swal-genre-buttons-panel {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 0.75rem;
+    justify-content: center;
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 0;
+    background-color: var(--filter-panel-bg);
+    border: 1px solid rgba(255, 121, 198, 0.1);
+}
+
+.swal-genre-filter-type-selector button,
+.swal-genre-buttons-panel button {
+    padding: 0.7rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    will-change: background-color, color, transform;
+}
+
+.swal-genre-filter-type-selector button:not(.active),
+.swal-genre-buttons-panel button:not(.active) {
+    background-color: var(--filter-button-inactive-bg);
+    color: var(--dracula-comment);
+}
+
+.swal-genre-filter-type-selector button:not(.active):hover,
+.swal-genre-buttons-panel button:not(.active):hover {
+    background-color: var(--filter-button-inactive-hover-bg);
+    color: var(--dracula-foreground);
+    transform: translateY(-2px);
+}
+
+.swal-genre-filter-type-selector button.active,
+.swal-genre-buttons-panel button.active {
+    background-color: var(--dracula-pink);
+    color: var(--dracula-foreground);
+    font-weight: 700; /* Make font bolder */
+    box-shadow: 0 0 20px rgba(255, 121, 198, 0.6); /* Stronger shadow */
+    transform: scale(1.02); /* Slightly larger when active */
+    transition: all 0.2s ease-in-out; /* Smooth transition */
+}
+
+/* --- FIM: ESTILOS EXATOS PARA O FILTRO DE GÊNERO --- */
+
+.swal-details-popup.swal2-popup,
+.swal-favorites-popup.swal2-popup {
+    width: 900px !important;
+    max-width: 95vw !important;
+    max-height: 90vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.swal-details-popup .swal2-html-container,
+.swal-favorites-popup .swal2-html-container {
+    overflow-y: auto !important;
+    flex-grow: 1 !important;
+    scrollbar-width: thin;
+    scrollbar-color: var(--dracula-pink) var(--dracula-current-line);
+}
+
+.swal-filter-actions {
+    margin-top: 1.5rem !important;
+}
+
+.swal-filter-actions .swal2-confirm {
+    background-color: var(--dracula-pink) !important;
+    color: var(--dracula-foreground) !important;
+    border: none !important;
+    border-radius: 0.75rem !important;
+    box-shadow: 0 4px 15px rgba(255, 121, 198, 0.4) !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.swal-filter-actions .swal2-confirm:hover {
+    background-color: var(--dracula-purple) !important;
+    box-shadow: 0 6px 20px rgba(189, 147, 249, 0.6) !important;
+}
+
+.swal-filter-actions .swal2-deny {
+    background-color: var(--filter-button-inactive-bg) !important;
+    color: var(--dracula-comment) !important;
+    border: none !important;
+    border-radius: 0.75rem !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.swal-filter-actions .swal2-deny:hover {
+    background-color: var(--filter-button-inactive-hover-bg) !important;
+    color: var(--dracula-foreground) !important;
+}
+
+
+/* ==========================================================================
+   CONTEÚDO DO MODAL DE DETALHES
+   ========================================================================== */
+
+.swal-details-content { padding-bottom: 1.5rem; }
+
+.details-trailer-container {
+    position: relative;
+    background-color: #000;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin: 1rem 1rem 1.5rem 1rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 121, 198, 0.4); /* Increased shadow */
+    border: 1px solid var(--modal-border-neutral);
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+.details-trailer-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 121, 198, 0.6); /* More prominent shadow on hover */
+}
+
+.details-trailer-container--fallback {
+    padding-top: 0;
+    line-height: 0;
+}
+
+.details-trailer-container iframe,
+.details-trailer-container .trailer-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.trailer-cover {
+    cursor: pointer;
+    z-index: 5;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+    will-change: opacity, visibility;
+}
+
+.trailer-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.play-icon-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s ease;
+    will-change: background-color;
+}
+
+.trailer-cover:hover .play-icon-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.play-icon-overlay .fa-play {
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+.trailer-cover:hover .play-icon-overlay .fa-play {
+    transform: scale(1.15);
+}
+
+.details-trailer-container.trailer-playing .trailer-cover {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.details-poster-fallback {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 50vh;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 0.8rem;
+}
+
+.swal-details-content .details-info-area { padding: 0 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.75rem; }
+.swal-details-content .details-content-title { font-size: 1.85rem; font-weight: 700; color: var(--dracula-pink); line-height: 1.2; margin-bottom: 0.5rem; }
+.swal-details-content .details-meta-info { font-size: 0.9rem; color: var(--dracula-comment); display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
+.swal-details-content .details-meta-info span { display: inline-flex; align-items: center; }
+.swal-details-content .details-meta-info .fas { margin-right: 0.375rem; }
+.swal-details-content .details-genres { font-size: 0.875rem; color: var(--dracula-comment); }
+.swal-details-content .details-genres strong { color: var(--dracula-pink); font-size: 0.95rem; }
+.swal-details-content .details-section-subtitle { font-size: 1.2rem; font-weight: 600; color: var(--dracula-pink); margin-top: 0.8rem; margin-bottom: 0.6rem; padding-left: 1rem; }
+.swal-details-content .details-overview { font-size: 1rem; line-height: 1.65; color: var(--dracula-foreground); }
+
+.details-cast-section { margin-top: 1.5rem; }
+.details-cast-scroller { display: flex; overflow-x: auto; gap: 1rem; padding: 0.75rem 1rem; margin-bottom: 1rem; }
+.cast-member-card { flex: 0 0 100px; text-align: center; background-color: rgba(255,255,255,0.05); padding: 0.75rem 0.5rem; border-radius: 0.6rem; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; justify-content: flex-start; }
+.cast-member-photo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin: 0 auto 0.5rem auto; border: 2px solid var(--dracula-pink); background-color: var(--dracula-current-line); }
+.cast-member-name { font-size: 0.85rem; font-weight: 600; color: var(--dracula-foreground); line-height: 1.2; height: 2.4em; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.25rem; }
+.cast-member-character { font-size: 0.75rem; color: var(--dracula-comment); line-height: 1.2; height: 2.4em; overflow: hidden; text-overflow: ellipsis; }
+
+.details-player-section { margin-top: 1rem; padding: 0 1rem;}
+.details-iframe-container { margin-top: 0.5rem; background-color: #000; border-radius: 0.8rem; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.5); aspect-ratio: 16 / 9; }
+.details-iframe-container.iframe-series-dimensions { aspect-ratio: auto; height: 400px; }
+.details-iframe-container iframe { width: 100%; height: 100%; border: none; display: block; }
+.swal-details-content .details-player-unavailable { margin-top: 1.25rem; text-align: center; color: #FFD700; background-color: rgba(255, 215, 0, 0.15); padding: 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; }
+
+/* ==========================================================================
+   FAVORITOS
+   ========================================================================== */
+
+.modal-favorite-button {
+    padding: 0.7rem 1.4rem;
+    border-radius: 0.8rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255, 121, 198, 0.2);
+    background: linear-gradient(135deg, rgba(189, 147, 249, 0.3), rgba(255, 121, 198, 0.3));
+    color: var(--dracula-foreground);
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    will-change: background, color, border-color, box-shadow;
+    margin: 0.3rem;
+    box-shadow: var(--subtle-shadow);
+}
+
+.modal-favorite-button:hover {
+    background: linear-gradient(135deg, rgba(189, 147, 249, 0.7), rgba(255, 121, 198, 0.7));
+    color: var(--dracula-foreground);
+    border-color: rgba(255, 121, 198, 0.3);
+    box-shadow: 0 6px 20px rgba(189, 147, 249, 0.3), 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.content-card .favorite-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 121, 198, 0.2);
+    color: var(--dracula-foreground);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+    will-change: background-color, color, transform;
+    z-index: 10;
+}
+
+.content-card .favorite-button:hover {
+    background-color: rgba(255, 121, 198, 0.8);
+    color: white;
+    transform: scale(1.1);
+}
+
+.content-card .favorite-button.active {
+    color: var(--dracula-red);
+    background-color: rgba(255, 85, 85, 0.2);
+    border-color: var(--dracula-red);
+}
+
+.content-card .favorite-button.active:hover {
+    background-color: rgba(255, 85, 85, 0.4);
+    color: white;
+}
+
+.modal-favorite-button.active {
+    background: var(--dracula-red);
+    color: var(--dracula-foreground);
+    border-color: var(--dracula-red);
+    box-shadow: 0 0 15px rgba(255, 85, 85, 0.7);
+}
+
+.modal-favorite-button.active:hover {
+    background: #ff7272;
+    border-color: #ff7272;
+    box-shadow: 0 6px 20px rgba(255, 85, 85, 0.5);
+}
+
+.modal-favorite-button .fas,
+.modal-favorite-button .far {
+    margin-right: 0.5rem;
+}
+
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.favorite-card {
+    position: relative;
+}
+
+.favorite-card .remove-favorite-button {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    background-color: rgba(255, 85, 85, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    will-change: background-color, transform;
+    z-index: 11;
+}
+
+.favorite-card .remove-favorite-button:hover {
+    background-color: #ff7272;
+    transform: scale(1.15);
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATIONS
+   ========================================================================== */
+
+.custom-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%, 100px);
+    padding: 12px 20px;
+    border-radius: 25px;
+    color: var(--dracula-foreground);
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.215, 0.610, 0.355, 1), opacity 0.4s ease, visibility 0.4s ease;
+    will-change: transform, opacity, visibility;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(189, 147, 249, 0.5), rgba(255, 121, 198, 0.5));
+}
+
+.custom-toast.show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.custom-toast--success {
+    background: linear-gradient(135deg, #28a745, var(--dracula-green));
+}
+
+.custom-toast--info {
+    background: linear-gradient(135deg, #17a2b8, var(--dracula-cyan));
+}
+
+.custom-toast .fas {
+    font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   SCROLLBARS (ESTILOS CONSOLIDADOS)
+   ========================================================================== */
+
+#week-navigation::-webkit-scrollbar,
+.swal-genre-buttons-panel::-webkit-scrollbar,
+.swal-details-popup .swal2-html-container::-webkit-scrollbar,
+.details-cast-scroller::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+}
+
+#week-navigation::-webkit-scrollbar-track,
+.swal-genre-buttons-panel::-webkit-scrollbar-track,
+.swal-details-popup .swal2-html-container::-webkit-scrollbar-track,
+.details-cast-scroller::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+#week-navigation::-webkit-scrollbar-thumb,
+.swal-genre-buttons-panel::-webkit-scrollbar-thumb,
+.swal-details-popup .swal2-html-container::-webkit-scrollbar-thumb,
+.details-cast-scroller::-webkit-scrollbar-thumb {
+    background-color: var(--dracula-pink);
+    border-radius: 10px;
+}
+
+#week-navigation::-webkit-scrollbar-thumb:hover,
+.swal-genre-buttons-panel::-webkit-scrollbar-thumb:hover,
+.swal-details-popup .swal2-html-container::-webkit-scrollbar-thumb:hover,
+.details-cast-scroller::-webkit-scrollbar-thumb:hover {
+    background-color: var(--dracula-purple);
+}
+
+/* ==========================================================================
+   ESTILOS DO CONTADOR DE EPISÓDIOS (ADICIONADO E CORRIGIDO)
+   ========================================================================== */
+
+.day-episode-count, .month-episode-count {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: var(--dracula-red); /* Usa a variável vermelha do seu tema */
+    color: #ffffff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    z-index: 10;
+}

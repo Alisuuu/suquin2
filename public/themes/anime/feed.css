@@ -1,0 +1,95 @@
+/* Anime Theme for Feed */
+:root {
+    --feed-background: #282a36; /* Dracula background as base */
+    --feed-text-color: #f8f8f2;
+    --feed-link-color: #ff79c6; /* Dracula pink */
+    --feed-item-bg: #44475a; /* Dracula current line */
+    --feed-border-color: rgba(255, 121, 198, 0.2);
+    --feed-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body {
+    background-color: var(--feed-background);
+    color: var(--feed-text-color);
+    font-family: 'sans-serif';
+    margin: 0;
+    padding: 10px;
+}
+
+#news-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.news-item {
+    background-color: var(--feed-item-bg);
+    border: 1px solid var(--feed-border-color);
+    border-radius: 0.75rem;
+    margin-bottom: 15px;
+    padding: 15px;
+    display: flex;
+    gap: 15px;
+    box-shadow: var(--feed-shadow);
+    transition: transform 0.2s ease-in-out;
+}
+
+.news-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.news-item img {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+
+.news-content {
+    flex-grow: 1;
+}
+
+.news-content h2 {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.news-content h2 a {
+    color: var(--feed-link-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.news-content h2 a:hover {
+    text-decoration: underline;
+}
+
+.news-content p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--feed-text-color);
+    margin-bottom: 5px;
+}
+
+.news-content p:last-child {
+    color: var(--twitch-gray); /* Using a gray for meta info */
+    font-size: 0.8rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .news-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .news-item img {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        margin-bottom: 10px;
+    }
+}

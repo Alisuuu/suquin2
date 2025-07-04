@@ -1,0 +1,363 @@
+/* General Reset and Body Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+    --amoled-black: #000000;
+    --purple-accent: #593BA2;
+    --purple-light: #8c70c8;
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --card-bg: #121212;
+    --border-color: #251A3D;
+    --border-highlight: #3A2B5C;
+    --danger-red: #E53E3E;
+    --danger-red-hover: #C53030;
+    --success-green: #48BB78;
+    --header-height-mobile: 5rem;
+    --expressive-gradient-light: linear-gradient(135deg, rgba(89, 59, 162, 0.4), rgba(162, 0, 255, 0.4));
+    --expressive-gradient-dark: linear-gradient(160deg, rgba(20, 0, 40, 0.9), rgba(30, 0, 50, 0.9));
+    --expressive-shadow: 0 8px 30px rgba(130, 0, 255, 0.3), 0 2px 10px rgba(0, 0, 0, 0.4);
+    --subtle-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 10px rgba(130, 0, 255, 0.1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #0c0c0c;
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+.stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgba(18, 18, 18, 0);
+    color: var(--text-primary);
+}
+
+.icons {
+    display: flex;
+    gap: 40px;
+}
+
+.icons a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--expressive-gradient-light);
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+                background 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    box-shadow: var(--subtle-shadow);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    -webkit-tap-highlight-color: transparent;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0px); }
+}
+
+.icons a:nth-child(1) { animation-delay: 0.1s; }
+.icons a:nth-child(2) { animation-delay: 0.2s; }
+.icons a:nth-child(3) { animation-delay: 0.3s; }
+
+.icons a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+}
+
+.icons a:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.icons a:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, rgba(89, 59, 162, 0.6), rgba(162, 0, 255, 0.6));
+    box-shadow: 0 8px 20px rgba(130, 0, 255, 0.4),
+                0 3px 10px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.icons a:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.icons img, .icons i {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+}
+
+.icons i {
+    font-size: 50px;
+}
+
+.link-box {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    animation-delay: 0.4s;
+}
+
+.link-input {
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.8rem;
+    width: 250px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    background-color: rgba(18, 18, 18, 0.7);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.link-input:focus {
+    border-color: var(--purple-accent);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(89, 59, 162, 0.4);
+}
+
+.go-btn {
+    background: linear-gradient(45deg, rgba(89, 59, 162, 0.6), rgba(162, 0, 255, 0.6));
+    color: var(--text-primary);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+                0 0 15px rgba(130, 0, 255, 0.2);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.go-btn i {
+    font-size: 26px;
+}
+
+.go-btn:hover {
+    background: linear-gradient(45deg, rgba(89, 59, 162, 0.8), rgba(162, 0, 255, 0.8));
+    transform: scale(1.12);
+    box-shadow: 0 8px 25px rgba(130, 0, 255, 0.4),
+                0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.go-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 600px) {
+    .icons { gap: 20px; }
+    .icons a { width: 100px; height: 100px; }
+    .icons img, .icons i { width: 50px; height: 50px; }
+    .icons i { font-size: 40px; }
+    .link-box { flex-direction: column; gap: 10px; }
+    .link-input { width: 90%; }
+    .go-btn { width: 50px; height: 50px; border-radius: 50%; }
+    .go-btn i { font-size: 22px; }
+}
+
+/* Estilos para o SweetAlert2 */
+.swal2-popup {
+    background: var(--expressive-gradient-dark) !important;
+    backdrop-filter: saturate(1.8) !important;
+    -webkit-backdrop-filter: saturate(1.8) !important;
+    width: 85% !important;
+    max-width: 500px !important;
+    border-radius: 1.5rem !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    box-shadow: 0 8px 30px -5px rgba(0,0,0,0.8),
+                0 0 50px rgba(130, 0, 255, 0.6) !important;
+}
+.swal2-title {
+    color: var(--purple-light) !important;
+    font-size: 1.8rem !important;
+}
+.swal2-html-container {
+    color: var(--text-primary) !important;
+    font-size: 1.05rem !important;
+}
+.swal2-confirm {
+    background: linear-gradient(45deg, var(--purple-accent), var(--purple-light)) !important;
+    border-color: var(--purple-accent) !important;
+    color: var(--amoled-black) !important;
+    border-radius: 0.8rem !important;
+    padding: 0.8rem 1.8rem !important;
+    box-shadow: 0 4px 15px rgba(89, 59, 162, 0.4) !important;
+    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+.swal2-confirm:hover {
+    background: linear-gradient(45deg, var(--purple-light), rgba(162, 0, 255, 0.8)) !important;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(89, 59, 162, 0.6) !important;
+}
+.swal2-cancel {
+    background: linear-gradient(45deg, var(--danger-red), var(--danger-red-hover)) !important;
+    border-color: var(--danger-red) !important;
+    color: var(--text-primary) !important;
+    border-radius: 0.8rem !important;
+    padding: 0.8rem 1.8rem !important;
+    box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3) !important;
+    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+.swal2-cancel:hover {
+    background: linear-gradient(45deg, var(--danger-red-hover), rgba(200, 50, 50, 0.8)) !important;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(229, 62, 62, 0.5) !important;
+}
+
+/* --- ESTILOS DO BOTÃO DE EXCLAMAÇÃO E SUA MENSAGEM --- */
+.exclamation-button {
+    position: fixed; top: 30px; right: 20px; z-index: 1000;
+    width: 45px; height: 45px;
+    background: linear-gradient(45deg, rgba(89, 59, 162, 0.2), rgba(162, 0, 255, 0.2));
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    color: #fff; font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(130, 0, 255, 0.3);
+    transition: background 0.3s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.exclamation-button:hover {
+    background: linear-gradient(45deg, rgba(89, 59, 162, 0.4), rgba(162, 0, 255, 0.4));
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(130, 0, 255, 0.5);
+}
+.exclamation-button:active {
+    transform: scale(0.95);
+}
+
+.notification-message-box {
+    position: fixed; top: 80px; right: 20px; z-index: 999;
+    background-color: rgba(26, 26, 26, 0.8);
+    
+    border: 1px solid rgba(89, 59, 162, 0.3);
+    border-radius: 1rem;
+    padding: 15px 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(130, 0, 255, 0.4);
+    max-width: 280px;
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.5;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.notification-message-box.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* MD3 Applied */
+.icons a {
+    background-color: rgba(18, 18, 18, 0.20);
+    border: 1px solid rgba(18,18,18,0.60);
+    border-radius: 16px;
+}
+
+.icons a:hover {
+    background-color: rgba(18, 18, 18, 0.30);
+}
+
+.link-input {
+    background-color: rgba(18, 18, 18, 0.20);
+    border: 1px solid rgba(18,18,18,0.60);
+    border-radius: 16px;
+}
+
+.go-btn {
+    background-color: rgba(18, 18, 18, 0.50);
+    border: 1px solid rgba(18,18,18,0.60);
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+.go-btn:hover {
+    background-color: rgba(18, 18, 18, 0.70);
+}
+
+.exclamation-button {
+    background-color: rgba(18, 18, 18, 0.50);
+    border: 1px solid rgba(18,18,18,0.60);
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+.exclamation-button:hover {
+    background-color: rgba(18, 18, 18, 0.70);
+}
+
+.notification-message-box {
+    background-color: rgba(18, 18, 18, 0.20);
+    border: 1px solid rgba(18,18,18,0.60);
+    border-radius: 16px;
+}

@@ -1,0 +1,88 @@
+/* ==========================================================================
+   CSS de Integração - Painel Lateral Deslizante Final
+   ========================================================================== */
+
+/* Garante que o body não tenha scroll horizontal e esconde o scroll vertical quando o painel está aberto */
+body {
+    overflow-x: hidden;
+}
+body.calendar-open {
+    overflow-y: hidden;
+}
+
+/* Transição suave para o conteúdo principal */
+#main-content {
+    transition: filter 0.4s ease-in-out;
+    width: 100%;
+}
+
+/* Painel do Calendário */
+#calendar-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%; /* Ocupa 80% da largura da tela */
+    max-width: 900px; /* Limite máximo para telas grandes */
+    height: 100vh; /* Ocupa 100% da altura */
+    z-index: 999;
+    
+    background-color: #05030a; /* Fundo escuro para o painel */
+    
+    /* Bordas da Esquerda Arredondadas */
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+    
+    box-shadow: -12px 0 40px rgba(0,0,0,0.7);
+    
+    /* Garante que o iframe respeite as bordas arredondadas */
+    overflow: hidden; 
+    
+    /* Começa fora da tela (escondido) */
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* --- ESTADOS DO PAINEL --- */
+
+/* Quando o painel está ABERTO */
+body.calendar-open #calendar-panel {
+    /* Move o painel para a visão */
+    transform: translateX(0);
+}
+
+
+/* Botão de fechar posicionado DENTRO do painel, à esquerda */
+#close-calendar-btn {
+    position: absolute;
+    bottom: 3%;
+    left: 86%;
+    z-index: 3000; /* Garante que fique acima do iframe */
+    
+    /* Estilo do botão */
+    background-color: rgba(12, 12, 12, 0.5);
+    color: white;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    cursor: pointer;
+    
+    transition: all 0.3s ease;
+}
+
+#close-calendar-btn:hover {
+    background-color: rgba(229, 62, 62, 0.8); /* Vermelho no hover */
+    transform: scale(1.1) rotate(90deg);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #calendar-panel {
+        width: 95%; /* Ocupa mais espaço em telas de celular */
+    }
+}

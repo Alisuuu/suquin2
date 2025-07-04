@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title></title>
+    <!-- Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Fonte Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 para modais -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+    <!-- Folhas de Estilo - Carregamento Dinâmico -->
+    <script>
+      const loadThemeCss = () => {
+          const selectedTheme = localStorage.getItem('selectedTheme') || 'default'; // 'default' as fallback
+          const cssFiles = [
+              'sorteio.css'
+          ];
+
+          // Remove existing theme stylesheets to prevent duplicates on theme change
+          document.querySelectorAll('link[data-theme-css]').forEach(link => link.remove());
+
+          cssFiles.forEach(file => {
+              const link = document.createElement('link');
+              link.rel = 'stylesheet';
+              link.href = `../themes/${selectedTheme}/${file}`; // Adjusted path
+              link.setAttribute('data-theme-css', ''); // Mark as theme CSS
+              document.head.appendChild(link);
+          });
+      };
+
+      // Load theme immediately
+      loadThemeCss();
+    </script>
+    <style>
+      body {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+    </style>
+</head>
+<body>
+    <div id="pageBackdrop"></div>
+    <div id="loader" class="loader" style="display: none;"></div>
+
+    <!-- ADICIONADO: Contêiner para o player de vídeo em tela cheia -->
+    <div id="player-fullscreen-wrapper"></div>
+
+    <div class="main-container">
+        <div class="button-group">
+            <button id="randomMovieButton" class="random-button">
+                <i class="fas fa-film"></i>
+                Filme
+            </button>
+            <button id="randomTvButton" class="random-button">
+                <i class="fas fa-tv"></i>
+                Série
+            </button>
+            <button id="historyButton" class="random-button">
+                <i class="fas fa-history"></i>
+                Histórico
+            </button>
+        </div>
+    </div>
+
+    <!-- Elementos necessários para os scripts do catálogo, mas ocultos -->
+    <div id="defaultContentSections" style="display: none;">
+        <div id="moviesSection"></div>
+        <div id="tvShowsSection"></div>
+    </div>
+    <div id="singleResultsSection" style="display: none;">
+        <h2 id="singleSectionTitle"></h2>
+        <div id="singleResultsGrid"></div>
+    </div>
+    
+    <!-- Container para o botão de ação "Sortear Novamente" -->
+    <div id="externalCopyButtonContainer">
+        <button id="pickAgainButton">
+            Sortear Novamente
+        </button>
+    </div>
+    
+    <!-- Scripts SweetAlert2 (necessário para o modal) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Seus scripts do catálogo. Verifique se os caminhos estão corretos. -->
+    <script src="../Catalogo1/catalogo.js"></script>
+    <!-- Link para o arquivo JavaScript principal da página -->
+    <script src="./script.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.visibility = 'visible';
+        document.body.style.opacity = '1';
+      });
+    </script>
+</body>
+</html>

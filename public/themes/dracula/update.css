@@ -1,0 +1,193 @@
+/* Definição das variáveis de cor com o novo tema monocromático */
+:root {
+    --background-color: #121212;
+    --primary-color: #FFFFFF;
+    --primary-color-hover: #E0E0E0;
+    --on-primary-color: #121212;
+    --subtle-text: #8A8A8A;
+    --bright-text: #EAEAEA;
+    --card-background: rgba(30, 30, 30, 0.75);
+    --card-border: rgba(255, 255, 255, 0.15);
+    --button-disabled: #444444;
+}
+
+/* Reset e configurações globais */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Roboto Flex', sans-serif;
+    background-color: var(--background-color);
+    color: var(--bright-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* O cartão de vidro */
+.card-container {
+    position: relative;
+    width: clamp(320px, 90vw, 380px);
+    height: clamp(450px, 80vh, 550px);
+    
+    /* Efeito Glassmorphism */
+    background-color: var(--card-background);
+    
+    border: 1px solid var(--card-border);
+
+    border-radius: 28px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.header {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.app-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--bright-text);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+.repo-subtitle {
+    font-size: 14px;
+    color: var(--subtle-text);
+    font-weight: 400;
+}
+
+/* Área central de status */
+.status-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+}
+
+#status-icon .material-symbols-outlined {
+    font-size: 72px;
+    color: var(--primary-color);
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+    font-variation-settings: 'FILL' 1;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.icon-loading .material-symbols-outlined {
+    animation: spin 1.5s linear infinite;
+}
+
+#status-text {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--bright-text);
+}
+
+#version-info {
+    font-size: 14px;
+    color: var(--subtle-text);
+    min-height: 20px;
+    padding: 0 10px;
+}
+
+/* Container e Botão de Download (Estilo "Ghost Button") */
+#download-container {
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.download-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 24px;
+    background-color: transparent;
+    color: var(--primary-color-hover);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 2px solid var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.download-button:hover {
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.download-button .material-symbols-outlined {
+    font-size: 22px;
+}
+
+/* Botão de Ação Flutuante (FAB) */
+.fab {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-color);
+    color: var(--on-primary-color);
+    border-radius: 18px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 15px -5px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.fab .material-symbols-outlined {
+    font-size: 28px;
+    font-weight: 700;
+    transition: transform 0.4s ease;
+}
+
+.fab:hover {
+    background-color: var(--primary-color-hover);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 0 20px 0px rgba(255, 255, 255, 0.3);
+}
+
+.fab:active {
+    transform: translateY(0) scale(1);
+}
+
+.fab:disabled {
+    background-color: var(--button-disabled);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.fab:disabled .material-symbols-outlined {
+    transform: rotate(180deg);
+}

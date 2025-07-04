@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendário de Lançamentos</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  
+  <!-- Folhas de Estilo - Carregamento Dinâmico -->
+  <script>
+    const loadThemeCss = () => {
+        const selectedTheme = localStorage.getItem('selectedTheme') || 'default'; // 'default' as fallback
+        const cssFiles = [
+            'calendario.css'
+        ];
+
+        // Remove existing theme stylesheets to prevent duplicates on theme change
+        document.querySelectorAll('link[data-theme-css]').forEach(link => link.remove());
+
+        cssFiles.forEach(file => {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = `../themes/${selectedTheme}/${file}`; // Adjusted path
+            link.setAttribute('data-theme-css', ''); // Mark as theme CSS
+            document.head.appendChild(link);
+        });
+    };
+
+    // Load theme immediately
+    loadThemeCss();
+  </script>
+  <style>
+    body {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans text-gray-200">
+
+<!-- Container para o fundo dinâmico -->
+<div id="backdrop-container"></div>
+
+<!-- Cabeçalho -->
+<header class="flex flex-wrap gap-4 p-4 items-center justify-center sm:justify-start sticky top-0 z-20 bg-black/50 backdrop-blur-lg border-b border-white/10">
+  <!-- Container para busca e filtros -->
+  <div class="flex flex-grow w-full max-w-full lg:max-w-2xl gap-3 items-center">
+    <!-- Barra de Busca -->
+    <div class="flex-grow relative flex items-center">
+      <input id="search" placeholder="Buscar episódios..." class="w-full text-white placeholder-gray-300 pl-5 pr-12 py-3 rounded-xl focus:outline-none text-sm"/>
+      <svg class="absolute right-5 w-5 h-5 text-gray-300 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+      </svg>
+    </div>
+    <!-- Botão de Filtro -->
+    <button id="toggleFiltersBtn" class="text-white px-6 py-3 rounded-xl text-sm flex-shrink-0 font-semibold shadow-md">Filtros</button>
+  </div>
+  
+  <!-- Botões de Período -->
+  <div class="period flex flex-wrap gap-2 justify-center sm:justify-start w-full sm:w-auto">
+    <button id="semana" class="button-blur px-4 py-2 rounded-full text-sm active">Semana</button>
+    <button id="mes" class="button-blur px-4 py-2 rounded-full text-sm">Mês</button>
+  </div>
+</header>
+
+<!-- Container Principal do Conteúdo -->
+<main class="flex-grow p-4 flex flex-col gap-4">
+    <nav id="week-navigation" class="flex gap-2 overflow-x-auto pb-2">
+        <!-- Botões dos dias inseridos aqui via JS -->
+    </nav>
+    <div id="content-area" class="flex-grow h-full">
+        <!-- Conteúdo principal inserido aqui via JS -->
+    </div>
+</main>
+
+<!-- Script do Projeto -->
+
+<script src="../Catalogo1/catalogo.js"></script>
+<script src="./script.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.style.visibility = 'visible';
+      document.body.style.opacity = '1';
+    });
+  </script>
+</body>
+</html>

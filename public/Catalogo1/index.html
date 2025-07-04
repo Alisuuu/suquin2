@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suquinho Play</title>
+    <!-- Fontes e Ícones -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+    <!-- Folhas de Estilo - Carregamento Dinâmico -->
+    <script>
+      const loadThemeCss = () => {
+          const selectedTheme = localStorage.getItem('selectedTheme') || 'default'; // 'default' as fallback
+          const cssFiles = [
+              'catálogo.css',
+              'integration.css'
+          ];
+
+          // Remove existing theme stylesheets to prevent duplicates on theme change
+          document.querySelectorAll('link[data-theme-css]').forEach(link => link.remove());
+
+          cssFiles.forEach(file => {
+              const link = document.createElement('link');
+              link.rel = 'stylesheet';
+              link.href = `../themes/${selectedTheme}/${file}`; // Adjusted path
+              link.setAttribute('data-theme-css', ''); // Mark as theme CSS
+              document.head.appendChild(link);
+          });
+      };
+
+      // Load theme immediately
+      loadThemeCss();
+    </script>
+
+    <!-- Estilos para os Loaders -->
+    <style>
+        .horizontal-loader {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to left, rgba(10, 5, 20, 0.8), rgba(10, 5, 20, 0));
+            pointer-events: none;
+            
+            /* CORREÇÃO: Usar visibility e opacity para a transição funcionar */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+        }
+
+        .horizontal-loader.loading {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .loader-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: #FFF;
+            width: 36px;
+            height: 36px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        img.lazy-image {
+            background-color: #1f1f32;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: .5;
+            }
+        }
+    </style>
+    <style>
+      body {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+    </style>
+</head>
+<body>
+    <div id="pageBackdrop"></div>
+    <div id="loader" class="loader-overlay" style="display: none;"><div class="loader"></div></div>
+
+    <!-- Conteúdo Principal do Catálogo -->
+    <div id="main-content">
+        <header>
+            <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0 p-4">
+                <div class="header-controls-wrapper w-full lg:w-auto">
+                    <div class="header-controls w-full lg:w-auto flex items-center justify-center lg:justify-end">
+                        <div class="input-search-wrapper relative">
+                            <input id="searchInput" class="input-search" type="text" placeholder="Buscar filmes ou séries...">
+                            <button id="searchButton" aria-label="Buscar"><i class="fas fa-search"></i></button>
+                        </div>
+                        <button id="filterToggleButton" aria-label="Filtrar por gênero">
+                        Filtro
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main id="contentArea" class="container mx-auto p-4 lg:p-6">
+            <div id="defaultContentSections">
+                <div class="content-section">
+                    <h2 class="section-title">Filmes Populares</h2>
+                    <div class="relative">
+                        <div id="moviesResultsGrid" class="horizontal-scroll-grid"></div>
+                        <div id="popularMoviesLoader" class="horizontal-loader">
+                            <div class="loader-spinner"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-section">
+                    <h2 class="section-title">Séries em Alta</h2>
+                     <div class="relative">
+                        <div id="tvShowsResultsGrid" class="horizontal-scroll-grid"></div>
+                        <div id="topRatedTvShowsLoader" class="horizontal-loader">
+                            <div class="loader-spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="singleResultsSection" style="display: none;">
+                <h2 id="singleSectionTitle" class="section-title">Resultados</h2>
+                <div id="singleResultsGrid" class="main-results-grid"></div>
+                <div id="searchResultsLoader" class="w-full flex justify-center py-4" style="display: none;"><div class="loader-spinner"></div></div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Painel Lateral do Calendário (Agora com Iframe dentro) -->
+    <div id="calendar-panel">
+        <button id="close-calendar-btn" aria-label="Fechar Calendário">
+            <i class="fas fa-times"></i>
+        </button>
+        <iframe src="../calendario/index.html" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+
+    <!-- Botões Flutuantes -->
+    <div id="floatingButtonWrapper">
+        <button id="open-calendar-btn" aria-label="Abrir Calendário"><i class="fas fa-calendar-alt"></i></button>
+        <button id="floatingFavoritesButton" aria-label="Ver Favoritos"><i class="fa-solid fa-heart"></i></button>
+    </div>
+
+    <!-- Container para o player em tela cheia -->
+    <div id="player-fullscreen-wrapper"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="catalogo.js"></script>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.visibility = 'visible';
+        document.body.style.opacity = '1';
+      });
+    </script>
+</body>
+</html>

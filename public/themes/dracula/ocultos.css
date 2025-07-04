@@ -1,0 +1,382 @@
+/* General Reset and Body Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+    --background-color: #121212;
+    --primary-color: #FFFFFF;
+    --on-primary-color: #121212;
+    --text-primary: #EAEAEA;
+    --text-secondary: #8A8A8A;
+    --surface-color: rgba(255, 255, 255, 0.05);
+    --card-bg: #1E1E1E;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-highlight: #FFFFFF;
+    --danger-red: #ff5555;
+    --danger-red-hover: #ff6e6e;
+    --success-green: #50fa7b;
+    --header-height-mobile: 5rem;
+    --expressive-gradient-light: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    --expressive-gradient-dark: linear-gradient(160deg, rgba(18, 18, 18, 0.7), rgba(30, 30, 30, 0.7));
+    --expressive-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.6);
+    --subtle-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: rgba(18, 18, 18, 0.25);
+    
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+.stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    border-radius: 50%;
+    background-color: white;
+    opacity: 0.6;
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: transparent;
+    color: var(--text-primary);
+}
+
+.icons {
+    display: flex;
+    gap: 40px;
+}
+
+.icons a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--surface-color);
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+                background 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    box-shadow: var(--subtle-shadow);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    -webkit-tap-highlight-color: transparent;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0px); }
+}
+
+.icons a:nth-child(1) { animation-delay: 0.1s; }
+.icons a:nth-child(2) { animation-delay: 0.2s; }
+.icons a:nth-child(3) { animation-delay: 0.3s; }
+
+.icons a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+}
+
+.icons a:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.icons a:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1),
+                0 3px 10px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.icons a:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.icons img, .icons i {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+}
+
+.icons i {
+    font-size: 50px;
+}
+
+.link-box {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    animation-delay: 0.4s;
+}
+
+.link-input {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 0.8rem;
+    width: 250px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    background-color: rgba(18, 18, 18, 0.7);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.link-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.go-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+                0 0 15px rgba(255, 255, 255, 0.05);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.go-btn i {
+    font-size: 26px;
+}
+
+.go-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.12);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15),
+                0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.go-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 600px) {
+    .icons { gap: 20px; }
+    .icons a { width: 100px; height: 100px; }
+    .icons img, .icons i { width: 50px; height: 50px; }
+    .icons i { font-size: 40px; }
+    .link-box { flex-direction: column; gap: 10px; }
+    .link-input { width: 90%; }
+    .go-btn { width: 50px; height: 50px; border-radius: 50%; }
+    .go-btn i { font-size: 22px; }
+}
+
+/* Estilos para o SweetAlert2 */
+.swal2-popup {
+    background: var(--expressive-gradient-dark) !important;
+    
+    width: 85% !important;
+    max-width: 500px !important;
+    border-radius: 1.5rem !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    box-shadow: 0 8px 30px -5px rgba(0,0,0,0.8),
+                0 0 50px rgba(255, 255, 255, 0.1) !important;
+}
+.swal2-title {
+    color: var(--text-primary) !important;
+    font-size: 1.8rem !important;
+}
+.swal2-html-container {
+    color: var(--text-primary) !important;
+    font-size: 1.05rem !important;
+}
+.swal2-confirm {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--on-primary-color) !important;
+    border-radius: 0.8rem !important;
+    padding: 0.8rem 1.8rem !important;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+.swal2-confirm:hover {
+    background: #E0E0E0 !important;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15) !important;
+}
+.swal2-cancel {
+    background: var(--danger-red) !important;
+    border-color: var(--danger-red) !important;
+    color: var(--text-primary) !important;
+    border-radius: 0.8rem !important;
+    padding: 0.8rem 1.8rem !important;
+    box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3) !important;
+    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+.swal2-cancel:hover {
+    background: var(--danger-red-hover) !important;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(229, 62, 62, 0.5) !important;
+}
+
+/* --- ESTILOS DO BOTÃO DE EXCLAMAÇÃO E SUA MENSAGEM --- */
+.exclamation-button {
+    position: fixed; top: 30px; right: 20px; z-index: 1000;
+    width: 45px; height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    color: #fff; font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.exclamation-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(255, 255, 255, 0.15);
+}
+.exclamation-button:active {
+    transform: scale(0.95);
+}
+
+.notification-message-box {
+    position: fixed; top: 80px; right: 20px; z-index: 999;
+    background-color: rgba(30, 30, 30, 0.8);
+    
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    padding: 15px 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(255, 255, 255, 0.1);
+    max-width: 280px;
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.5;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.notification-message-box.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* MD3 Applied */
+.icons a {
+    background-color: rgba(30, 30, 30, 0.20);
+    
+    border: 1px solid rgba(50, 50, 50, 0.60);
+    border-radius: 16px;
+}
+
+/* MD3 Applied */
+.icons a:hover {
+    background-color: rgba(30, 30, 30, 0.30);
+    
+}
+
+/* MD3 Applied */
+.link-input {
+    background-color: rgba(30, 30, 30, 0.20);
+    
+    border: 1px solid rgba(50, 50, 50, 0.60);
+    border-radius: 16px;
+}
+
+/* MD3 Applied */
+.go-btn {
+    background-color: rgba(30, 30, 30, 0.50);
+    
+    border: 1px solid rgba(50, 50, 50, 0.60);
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+
+/* MD3 Applied */
+.go-btn:hover {
+    background-color: rgba(30, 30, 30, 0.70);
+    
+}
+
+
+/* MD3 Applied */
+.exclamation-button {
+    background-color: rgba(30, 30, 30, 0.50);
+    
+    border: 1px solid rgba(50, 50, 50, 0.60);
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+/* MD3 Applied */
+.exclamation-button:hover {
+    background-color: rgba(30, 30, 30, 0.70);
+    
+}
+
+/* MD3 Applied */
+.notification-message-box {
+    background-color: rgba(30, 30, 30, 0.20);
+    
+    border: 1px solid rgba(50, 50, 50, 0.60);
+    border-radius: 16px;
+}

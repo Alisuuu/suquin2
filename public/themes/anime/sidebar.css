@@ -1,0 +1,465 @@
+/* General Reset and Body Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #282a36; /* Dracula background */
+  color: #f8f8f2;
+  font-family: 'sans-serif'; /* Dracula font */
+  min-height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow-x: hidden; /* Prevent horizontal scrollbars */
+}
+
+/* Iframe for News Content */
+#newsFrame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 0;
+  background-color: #282a36; /* Fallback background for iframe area */
+}
+
+/* Sidebar Buttons Container */
+.sidebar-buttons {
+  position: fixed;
+  left: 18px;
+  top: 50%; /* Default position */
+  transform: translateY(-50%); /* Default vertical centering */
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  padding: 15px 8px; /* Increased padding for better spacing */
+  z-index: 999; 
+  gap: 28px; 
+  pointer-events: none; /* Container itself doesn't receive clicks unless children do */
+  /* Updated: Reintroduced and increased blur for the sidebar container */
+  
+}
+
+/* Modifier for sidebar container when condensed */
+.sidebar-container-condensed {
+  top: auto; /* Override default top */
+  bottom: 1%; /* Position at bottom */
+  transform: translateY(0); /* Reset vertical centering */
+}
+
+.sidebar-buttons > * {
+    pointer-events: auto; /* Children (buttons) are clickable */
+}
+
+/* Individual Icon Buttons */
+.icon-button {
+  background: linear-gradient(135deg, rgba(255, 121, 198, 0.5) 0%, rgba(189, 147, 249, 0.5) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  border-radius: 20%; /* Changed to match floating buttons */
+  width: 3.5rem; /* Changed to match floating buttons */
+  height: 3.5rem; /* Changed to match floating buttons */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem; /* Changed to match floating buttons */
+  color: white;
+  cursor: pointer;
+  text-decoration: none; 
+  box-shadow: 0 4px 15px rgba(189, 147, 249, 0.15), 
+              0 1px 5px rgba(0, 0, 0, 0.15); 
+  position: relative; 
+  overflow: hidden; 
+  -webkit-tap-highlight-color: transparent;
+  opacity: 1;
+  transform: translateX(0) scale(1) rotate(0deg); 
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              background 0.35s ease-out, 
+              box-shadow 0.35s ease-out, 
+              opacity 0.3s ease-out, 
+              height 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              width 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              font-size 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              margin-top 0.35s ease-out,
+              margin-bottom 0.35s ease-out,
+              padding-top 0.35s ease-out,
+              padding-bottom 0.35s ease-out,
+              border-width 0.35s ease-out;
+              background-color: rgba(0,0,0,0.2);
+}
+
+/* Modifier for toggle button when sidebar is condensed */
+#toggleSidebarBtn.toggle-btn-shrunk {
+    width: 60px; /* Smaller width */
+    height: 60px; /* Smaller height */
+    font-size: 28px; /* Smaller icon */
+}
+
+
+.icon-button img,
+.icon-button i {
+  position: relative;
+  z-index: 2; 
+  /* Updated: More subtle drop shadow for icons */
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.1));
+}
+
+.icon-button img {
+  width: 48px; 
+  height: 48px; 
+}
+
+.icon-button:hover {
+  transform: scale(1.1) translateY(-3px) rotate(2deg); /* Slightly less pronounced hover */
+  /* Updated: Slightly brighter background on hover, still subtle */
+  background: linear-gradient(135deg, rgba(255, 121, 198, 0.65) 0%, rgba(189, 147, 249, 0.65) 100%);
+  border-color: rgba(255, 255, 255, 0.2); /* Slightly more visible border on hover */
+  /* Updated: Softer box-shadow on hover */
+  box-shadow: 0 6px 20px rgba(189, 147, 249, 0.3), /* Slightly stronger glowing shadow */
+              0 2px 8px rgba(0, 0, 0, 0.25); /* More defined base shadow */
+}
+ /* Specific hover for shrunk toggle button to avoid translateY fighting with positioning */
+#toggleSidebarBtn.toggle-btn-shrunk:hover {
+    transform: scale(1.1) rotate(0deg); /* No translateY for shrunk button */
+}
+
+
+.icon-button:active {
+  transform: scale(1.03); 
+}
+
+@keyframes neonSmokePuff {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0.6;
+    /* Updated: More subtle smoke puff glow */
+    box-shadow: 0 0 8px 4px rgba(255, 121, 198, 0.3), /* Softer pink glow */
+                0 0 15px 7px rgba(189, 147, 249, 0.2); /* Softer violet accent */
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.0); /* Slightly smaller puff */
+    opacity: 0;
+    box-shadow: 0 0 20px 10px rgba(255, 121, 198, 0), 
+                0 0 30px 15px rgba(189, 147, 249, 0); 
+  }
+}
+
+.icon-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  /* Updated: More subtle background color for puff */
+  background-color: rgba(255, 121, 198, 0.1); /* Lighter pink tint */
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 1; 
+  pointer-events: none; 
+}
+
+.icon-button:active::after {
+  animation: neonSmokePuff 0.6s ease-out forwards; 
+}
+
+.sidebar-item-hidden {
+  opacity: 0;
+  visibility: hidden; 
+  transform: translateX(-120%) scale(0.7) rotate(-15deg); 
+  height: 0px !important; 
+  margin-top: -30% !important;
+  margin-bottom: 0px !important; 
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  border-width: 0px !important;
+  font-size: 0px !important; 
+  pointer-events: none;
+  transition: opacity 0.3s ease-out, 
+              visibility 0s linear 0.3s, 
+              transform 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55), 
+              height 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+              width 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+              font-size 0.35s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+              margin-top 0.35s ease-out, 
+              margin-bottom 0.35s ease-out,
+              padding-top 0.35s ease-out,
+              padding-bottom 0.35s ease-out,
+              border-width 0.35s ease-out;
+}
+
+/* RESPONSIVE DESIGN */
+@media screen and (max-width: 768px) {
+  .sidebar-buttons { 
+    left: 10px; 
+    padding: 12px 6px; /* Adjusted padding */
+    gap: 15px; 
+    border-radius: 20px; /* Consistent with main */
+  }
+  .sidebar-container-condensed {
+    bottom: 10px; /* Adjust for smaller screens */
+  }
+  .icon-button {
+    width: 55px; 
+    height: 55px; 
+    font-size: 31px; 
+  }
+  #toggleSidebarBtn.toggle-btn-shrunk {
+    width: 45px; 
+    height: 45px; 
+    font-size: 22px; 
+  }
+  .icon-button img {
+    width: 30px; 
+    height: 30px; 
+  }
+}
+
+@media screen and (max-width: 480px) { 
+  .sidebar-buttons { 
+    left: 8px; 
+    padding: 10px 5px; /* Adjusted padding */
+    gap: 15px; 
+    border-radius: 18px; /* Consistent with main */
+  }
+  .sidebar-container-condensed {
+    bottom: 8px; /* Adjust for smaller screens */
+  }
+  .icon-button { /* Default size for small screens */
+    width: 50px; 
+    height: 50px; 
+    font-size: 24px; 
+  }
+   #toggleSidebarBtn.toggle-btn-shrunk { /* Shrunk size for small screens */
+    width: 40px; 
+    height: 40px; 
+    font-size: 20px; 
+  }
+  .icon-button img {
+    width: 28px; 
+    height: 28px; 
+  }
+}
+
+/* NEW MEDIA QUERY FOR SHORTER SCREEN HEIGHTS */
+@media screen and (max-height: 550px) {
+  .sidebar-buttons { 
+    gap: 10px; /* Reduce gap for shorter screens */
+    padding: 10px 5px; /* Adjusted padding */
+  }
+  .icon-button {
+    width: 45px; 
+    height: 45px; 
+    font-size: 22px; 
+  }
+  #toggleSidebarBtn.toggle-btn-shrunk {
+    width: 38px; /* Adjust shrunk toggle button for consistency */
+    height: 38px; 
+    font-size: 18px; 
+  }
+  .icon-button img {
+    width: 25px; 
+    height: 25px; 
+  }
+}
+/* END OF NEW MEDIA QUERY */
+
+@media screen and (max-height: 450px) and (orientation: landscape) and (max-width: 900px) {
+    .sidebar-buttons { 
+        gap: 8px; 
+        padding: 8px 4px; /* Adjusted padding */
+        left: 5px; 
+        border-radius: 15px; /* Consistent with main */
+    }
+    .sidebar-container-condensed {
+        bottom: 5px; /* Adjust for landscape */
+     }
+    .icon-button {
+        width: 40px; 
+        height: 40px; 
+        font-size: 18px; 
+    }
+    #toggleSidebarBtn.toggle-btn-shrunk {
+        width: 35px; 
+        height: 35px; 
+        font-size: 16px; 
+    }
+    .icon-button img {
+        width: 20px; 
+        height: 20px; 
+    }
+}
+
+.fullscreen-toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  z-index: 9999;
+  cursor: pointer;
+  color: #fff;
+
+  transition: background 0.2s;
+}
+
+.fullscreen-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .fullscreen-toggle {
+    display: none;
+  }
+}
+
+/* Donate Button - Similar style to fullscreen button */
+.donate-toggle {
+  position: fixed;
+  bottom: 15px; /* Position at the bottom */
+  right: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  z-index: 9999; /* Ensure it's above other content */
+  cursor: pointer;
+  color: #fff;
+
+  transition: background 0.2s;
+  display: flex; /* To center the icon */
+  align-items: center;
+  justify-content: center;
+  font-size: 24px; /* Adjust icon size if needed */
+  -webkit-tap-highlight-color: transparent;
+user-select: none;
+}
+
+.donate-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Ensure donate button is visible on mobile */
+@media (max-width: 768px) {
+  .donate-toggle {
+    display: flex; /* Always show on mobile */
+  }
+}
+
+/* Modal Styles */
+.modal-overlay {
+  display: none; /* Hidden by default - ESTA LINHA É CRUCIAL PARA INICIAR ESCONDIDO */
+  position: fixed;
+  z-index: 10000; /* Higher than other elements */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scroll if content is too long */
+  background-color: rgba(0, 0, 0, 0.7); /* Black with opacity */
+  
+  /* Removido `display: flex;` daqui. Ele será adicionado via JS quando o modal for aberto. */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #44475a; /* Dark background for modal */
+  margin: auto; /* Centering */
+  padding: 25px;
+  border: 1px solid rgba(255, 121, 198, 0.2);
+  border-radius: 15px;
+  width: 90%; /* Responsive width */
+  max-width: 500px; /* Max width for larger screens */
+  box-shadow: 0 8px 30px rgba(189, 147, 249, 0.4), /* Glowing shadow */
+              0 2px 10px rgba(0, 0, 0, 0.3); /* Base shadow */
+  position: relative;
+  text-align: center;
+  animation: fadeInScale 0.3s cubic-bezier(0.23, 1, 0.32, 1); /* Animation for modal entry */
+}
+
+.modal-content h2 {
+  color: #fff;
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  text-shadow: 0 0 5px rgba(255, 121, 198, 0.5); /* Subtle text glow */
+}
+
+.modal-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close-button {
+  color: #aaa;
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+user-select: none;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Animation for modal entry */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Media queries for donate button and modal */
+@media (max-width: 768px) {
+  .donate-toggle {
+    bottom: 8px;
+    right: 8px;
+    width: 55px; /* Adjust size for smaller screens */
+    height: 55px;
+    font-size: 28px;
+  }
+  .modal-content {
+    padding: 20px;
+  }
+  .modal-content h2 {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .donate-toggle {
+    bottom: 30px;
+    top: 590px;
+    right: 307px;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+  .modal-content {
+    padding: 15px;
+  }
+  .modal-content h2 {
+    font-size: 1.3em;
+  }
+  }

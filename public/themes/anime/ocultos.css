@@ -1,0 +1,394 @@
+/* General Reset and Body Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+    --dracula-background: #282a36;
+    --dracula-current-line: #44475a;
+    --dracula-foreground: #f8f8f2;
+    --dracula-comment: #6272a4;
+    --dracula-pink: #ff79c6;
+    --dracula-purple: #bd93f9;
+    --dracula-cyan: #8be9fd;
+    --dracula-green: #50fa7b;
+    --dracula-red: #ff5555;
+    --header-height-mobile: 5rem; /* Altura do header no mobile */
+    /* Novas variáveis para gradientes sutis e blur */
+    --expressive-gradient-light: linear-gradient(135deg, rgba(255, 121, 198, 0.4), rgba(189, 147, 249, 0.4));
+    --expressive-gradient-dark: linear-gradient(160deg, rgba(40, 42, 54, 0.7), rgba(68, 71, 90, 0.7));
+    --expressive-shadow: 0 8px 30px rgba(189, 147, 249, 0.3), 0 2px 10px rgba(0, 0, 0, 0.4);
+    --subtle-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 10px rgba(189, 147, 249, 0.1);
+}
+
+body {
+    font-family: 'sans-serif'; /* Changed to sans-serif for Dracula look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: rgba(40, 42, 54, 0.25);
+    
+    color: var(--dracula-foreground);
+    overflow: hidden;
+}
+
+.stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgba(40, 42, 54, 0); /* Using variable */
+    color: var(--dracula-foreground); /* Using variable */
+}
+
+.icons {
+    display: flex;
+    gap: 40px;
+}
+
+.icons a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    /* Subtle gradient background */
+    background: var(--expressive-gradient-light);
+    /* Smoother transitions */
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+                background 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    /* Subtle shadow */
+    box-shadow: var(--subtle-shadow);
+    border: 1px solid rgba(255, 121, 198, 0.2); /* Subtle border */
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    -webkit-tap-highlight-color: transparent;
+    animation: fadeInUp 0.6s ease forwards; /* Adjusted animation duration */
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0px); }
+}
+
+.icons a:nth-child(1) { animation-delay: 0.1s; } /* Staggered delay */
+.icons a:nth-child(2) { animation-delay: 0.2s; }
+.icons a:nth-child(3) { animation-delay: 0.3s; }
+
+.icons a::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    /* Subtle radial gradient for hover effect */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1); /* Smoother transition */
+    opacity: 0;
+}
+
+.icons a:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.icons a:hover {
+    transform: scale(1.1);
+    /* Slightly brighter gradient on hover */
+    background: linear-gradient(135deg, rgba(255, 121, 198, 0.6), rgba(189, 147, 249, 0.6));
+    /* Enhanced shadow on hover */
+    box-shadow: 0 8px 20px rgba(189, 147, 249, 0.4),
+                0 3px 10px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 121, 198, 0.3); /* Slightly more visible border */
+}
+
+.icons a:active {
+    transform: scale(0.95);
+    /* Subtle active shadow */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.icons img, .icons i {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Subtle drop shadow for icons */
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.1));
+}
+
+.icons i {
+    font-size: 50px;
+}
+
+.link-box {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    animation-delay: 0.4s; /* Adjusted delay */
+}
+
+.link-input {
+    padding: 12px 15px; /* Increased padding */
+    border: 1px solid rgba(255, 121, 198, 0.25); /* Subtle border */
+    border-radius: 0.8rem; /* More rounded corners */
+    width: 250px; /* Slightly wider */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    background-color: rgba(40, 42, 54, 0.7); /* Darker, slightly transparent background */
+    color: var(--dracula-foreground); /* Using variable */
+    font-size: 1rem; /* Slightly larger font */
+}
+
+.link-input:focus {
+    border-color: var(--dracula-pink); /* Using variable */
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 121, 198, 0.4); /* Brighter focus glow */
+}
+
+.go-btn {
+    /* Subtle gradient background */
+    background: linear-gradient(45deg, rgba(255, 121, 198, 0.6), rgba(189, 147, 249, 0.6));
+    color: var(--dracula-foreground); /* Using primary text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px; /* Slightly larger */
+    height: 55px; /* Slightly larger */
+    /* Subtle shadow */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+                0 0 15px rgba(189, 147, 249, 0.2);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.go-btn i {
+    font-size: 26px; /* Slightly larger icon */
+}
+
+.go-btn:hover {
+    /* Slightly brighter gradient on hover */
+    background: linear-gradient(45deg, rgba(255, 121, 198, 0.8), rgba(189, 147, 249, 0.8));
+    transform: scale(1.12); /* More pronounced scale */
+    /* Enhanced shadow on hover */
+    box-shadow: 0 8px 25px rgba(189, 147, 249, 0.4),
+                0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.go-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 600px) {
+    .icons { gap: 20px; }
+    .icons a { width: 100px; height: 100px; }
+    .icons img, .icons i { width: 50px; height: 50px; }
+    .icons i { font-size: 40px; }
+    .link-box { flex-direction: column; gap: 10px; }
+    .link-input { width: 90%; } /* Adjusted width for mobile */
+    .go-btn { width: 50px; height: 50px; border-radius: 50%; } /* Keep circular on mobile */
+    .go-btn i { font-size: 22px; }
+}
+
+/* Estilos para o SweetAlert2 */
+.swal2-popup {
+    /* Fundo com gradiente sutil e desfoque mais intenso */
+    background: var(--expressive-gradient-dark) !important;
+    backdrop-filter: blur(25px) saturate(1.8) !important; /* Blur mais forte */
+    -webkit-backdrop-filter: blur(25px) saturate(1.8) !important;
+    width: 85% !important; /* Adjusted width */
+    max-width: 500px !important; /* Max width for larger screens */
+    border-radius: 1.5rem !important; /* Mais arredondado */
+    /* Removed fixed height */
+    border: 1px solid rgba(255,121,198,0.25) !important; /* Borda mais sutil */
+    box-shadow: 0 8px 30px -5px rgba(0,0,0,0.8), /* Sombra profunda */
+                0 0 50px rgba(189, 147, 249, 0.6) !important; /* Brilho roxo expressivo */
+}
+.swal2-title {
+    color: var(--dracula-pink) !important; /* Using variable */
+    font-size: 1.8rem !important; /* Slightly larger title */
+}
+.swal2-html-container {
+    color: var(--dracula-foreground) !important; /* Using variable */
+    font-size: 1.05rem !important; /* Slightly larger text */
+}
+.swal2-confirm {
+    background: linear-gradient(45deg, var(--dracula-pink), var(--dracula-purple)) !important; /* Gradient for confirm */
+    border-color: var(--dracula-pink) !important;
+    color: var(--dracula-background) !important; /* Black text for contrast */
+    border-radius: 0.8rem !important; /* More rounded */
+    padding: 0.8rem 1.8rem !important; /* Larger padding */
+    box-shadow: 0 4px 15px rgba(255, 121, 198, 0.4) !important; /* Subtle shadow */
+    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+.swal2-confirm:hover {
+    background: linear-gradient(45deg, var(--dracula-purple), rgba(189, 147, 249, 0.8)) !important; /* Brighter gradient on hover */
+    transform: translateY(-2px) scale(1.03); /* Subtle lift */
+    box-shadow: 0 6px 20px rgba(189, 147, 249, 0.6) !important; /* More pronounced shadow */
+}
+.swal2-cancel {
+    background: linear-gradient(45deg, var(--dracula-red), #ff7272) !important; /* Gradient for cancel */
+    border-color: var(--dracula-red) !important;
+    color: var(--dracula-foreground) !important; /* Primary text color */
+    border-radius: 0.8rem !important; /* More rounded */
+    padding: 0.8rem 1.8rem !important; /* Larger padding */
+    box-shadow: 0 4px 15px rgba(255, 85, 85, 0.3) !important; /* Subtle shadow */
+    transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+.swal2-cancel:hover {
+    background: linear-gradient(45deg, #ff7272, rgba(255, 85, 85, 0.8)) !important; /* Brighter gradient on hover */
+    transform: translateY(-2px) scale(1.03); /* Subtle lift */
+    box-shadow: 0 6px 20px rgba(255, 85, 85, 0.5) !important; /* More pronounced shadow */
+}
+
+/* --- ESTILOS DO BOTÃO DE EXCLAMAÇÃO E SUA MENSAGEM --- */
+.exclamation-button {
+    position: fixed; top: 30px; right: 20px; z-index: 1000;
+    width: 45px; height: 45px; /* Slightly larger */
+    background: linear-gradient(45deg, rgba(255, 121, 198, 0.2), rgba(189, 147, 249, 0.2)); /* Subtle gradient */
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    color: #fff; font-size: 28px; /* Larger icon */
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), /* Deeper shadow */
+                0 0 20px rgba(189, 147, 249, 0.3); /* Subtle glow */
+    transition: background 0.3s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 121, 198, 0.2); /* Subtle border */
+}
+.exclamation-button:hover {
+    background: linear-gradient(45deg, rgba(255, 121, 198, 0.4), rgba(189, 147, 249, 0.4)); /* More visible gradient on hover */
+    transform: scale(1.1); /* More pronounced scale */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), /* Deeper shadow */
+                0 0 30px rgba(189, 147, 249, 0.5); /* Stronger glow */
+}
+.exclamation-button:active {
+    transform: scale(0.95);
+}
+
+.notification-message-box {
+    position: fixed; top: 80px; right: 20px; z-index: 999;
+    background-color: rgba(40, 42, 54, 0.8); /* Slightly transparent background */
+    
+    border: 1px solid rgba(255, 121, 198, 0.3); /* Softer pink border */
+    border-radius: 1rem; /* More rounded corners */
+    padding: 15px 20px; /* Increased padding */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), /* Deeper shadow */
+                0 0 30px rgba(189, 147, 249, 0.4); /* Subtle violet glow */
+    max-width: 280px; /* Slightly wider */
+    color: var(--dracula-foreground); /* Using variable */
+    font-size: 15px; /* Slightly larger font */
+    line-height: 1.5; /* Improved line height */
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.notification-message-box.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* MD3 Applied */
+.icons a {
+    background-color: rgba(40, 42, 54, 0.20);
+
+    border: 1px solid rgba(40, 42, 54, 0.60);
+    border-radius: 16px;
+}
+
+/* MD3 Applied */
+.icons a:hover {
+    background-color: rgba(40, 42, 54, 0.30);
+
+}
+
+/* MD3 Applied */
+.link-input {
+    background-color: rgba(40, 42, 54, 0.20);
+
+    border: 1px solid rgba(40, 42, 54, 0.60);
+    border-radius: 16px;
+}
+
+/* MD3 Applied */
+.go-btn {
+    background-color: rgba(40, 42, 54, 0.50);
+    
+    border: 1px solid rgba(40, 42, 54, 0.60);
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+
+/* MD3 Applied */
+.go-btn:hover {
+    background-color: rgba(40, 42, 54, 0.70);
+    
+}
+
+
+/* MD3 Applied */
+.exclamation-button {
+    background-color: rgba(40, 42, 54, 0.50);
+    
+    border: 1px solid rgba(40, 42, 54, 0.60);
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+/* MD3 Applied */
+.exclamation-button:hover {
+    background-color: rgba(40, 42, 54, 0.70);
+    
+}
+
+/* MD3 Applied */
+.notification-message-box {
+    background-color: rgba(40, 42, 54, 0.20);
+
+    border: 1px solid rgba(40, 42, 54, 0.60);
+    border-radius: 16px;
+}
